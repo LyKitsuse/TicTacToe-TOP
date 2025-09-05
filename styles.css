@@ -20,6 +20,27 @@ body {
         input {
             height: 2em;
         }
+        button {
+            height: 2em;
+            border: none;
+        }
+        #start {
+            background-color: lightgreen;
+            color:black;
+            transition-duration: 0.2s;
+        }
+        #start:hover {
+            color: white;
+            background-color: green;
+        }
+        #reset {
+            background-color: red;
+            color: white;
+            transition-duration: 0.2s;
+        }
+        #reset:hover {
+            background-color: darkred;
+        }
     } 
 
     h3 {
@@ -44,14 +65,12 @@ body {
             justify-content: center;
             font-size: 40pt;
             font-weight: bolder;
+            transition-duration: 0.2s;
         }
 
         span:hover {
             border: 1px solid black;
             background-color:blanchedalmond;
         }
-
-        
     }
-
 }

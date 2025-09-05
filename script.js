@@ -99,7 +99,7 @@ const secondP = document.querySelector('#secondP');
 
 start.addEventListener('click', () => {
   if (firstP.value.trim().length > 0 && secondP.value.trim().length > 0) {
-    console.log("Players ready!");
+    info.textContent = "Players ready!";
 
     grid.forEach(span => {
       if (!span.dataset.bound) {
@@ -113,6 +113,9 @@ start.addEventListener('click', () => {
         span.dataset.bound = true; // mark as already bound
       }
     });
+  }
+  else {
+    info.textContent = "Please input Player 1 Name and Player 2 Name";
   }
 });
 
