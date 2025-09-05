@@ -7,10 +7,11 @@ let gameBoard = [
 var playerWin = false;
 function board() {
   let p1_turn = true;
+  let p1_win = false;
+  let p2_win = false;
 
   return (turn, info) => {
-    // place move
-    info.textContent = "Player Turn"
+    info.textContent = (!p1_turn ? firstP.value : secondP.value) + "'s Turn";
     if(!playerWin){
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -25,12 +26,38 @@ function board() {
 
     // check for win
     if (checkWin()) {
-      info.textContent = "Game Over!";
       playerWin = true;
-    }   
+
+      if (!p1_turn) {
+        p1_win = true;
+        p2_win = false;
+        info.textContent = firstP.value + " Wins!";
+      } else {
+        p1_win = false;
+        p2_win = true;
+        info.textContent = secondP.value + " Wins!";
+      }
+    }
+
+    if(checkDraw()){
+      info.textContent = "Draw!";
+    }
 
     return p1_turn ? 'O' : 'X';
   };
+}
+
+function checkDraw() {
+  for(let i = 0; i < 3; i++){
+    for(let j = 0; j < 3; j++){
+      if(gameBoard[i][j] != 'X' && gameBoard[i][j] != 'O'){
+        console.log("Not Draw Match!");
+        return false;
+      }
+    }
+  }
+  console.log("Draw Match!");
+  return true;
 }
 
 function checkWin() {
@@ -71,11 +98,11 @@ const secondP = document.querySelector('#secondP');
 
 
 start.addEventListener('click', () => {
-  if (firstP.textContent.trim().length > 0 && secondP.textContent.trim().length > 0) {
+  if (firstP.value.trim().length > 0 && secondP.value.trim().length > 0) {
     console.log("Players ready!");
 
     grid.forEach(span => {
-      if (!span.dataset.bound) {  // prevent multiple listeners
+      if (!span.dataset.bound) {
         span.addEventListener("click", () => {
           if (span.textContent === "X" || span.textContent === "O" || playerWin) {
             return; // block overwriting or moves after win
@@ -86,12 +113,8 @@ start.addEventListener('click', () => {
         span.dataset.bound = true; // mark as already bound
       }
     });
-
-    info.textContent = "Game Started! Player X first";
   }
 });
-
-
 
 reset.addEventListener('click', () => {
   grid.forEach(span => {
@@ -99,8 +122,8 @@ reset.addEventListener('click', () => {
     gameBoard = [[1, 2, 3],[4, 5, 6],[7, 8, 9]];
     info.textContent = "Press Start to Begin!"
     playerWin = false;
-    console.log(gameBoard)
   });
+  console.log(gameBoard)
 })
 
 
